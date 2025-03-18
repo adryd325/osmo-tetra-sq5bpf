@@ -295,7 +295,7 @@ void tp_sap_udata_ind(enum tp_sap_data_type type, const uint8_t *bits, unsigned 
 			for (i=0; i<90; i++)
 				block[346+i] = type4[342+i] ? -127 : 127;
 
-			sprintf(tmpstr,"TRA:%2.2x RX:%2.2x\0",tms->cur_burst.is_traffic,tetra_hack_rxid);
+			sprintf(tmpstr,"TRA:%2.2x DLTS:%2.2x RX:%2.2x\0",tms->cur_burst.is_traffic,tcd->time.tn,tetra_hack_rxid);
 			memcpy(tmpstr+13,block,sizeof(block));
 
 			sendto(tetra_hack_live_socket, (char *)&tmpstr, sizeof(block)+13, 0, (struct sockaddr *)&tetra_hack_live_sockaddr, tetra_hack_socklen);

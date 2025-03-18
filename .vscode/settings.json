@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "tetra_llc_pdu.h": "c"
+  },
+  "editor.formatOnSave": false
+}

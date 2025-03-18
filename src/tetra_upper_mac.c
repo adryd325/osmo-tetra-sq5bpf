@@ -293,7 +293,7 @@ int parse_d_connect(struct tetra_mac_state *tms, struct msgb *msg, unsigned int 
 		}
 		printf("\n");
 	}
-	sprintf(buf2," RX:%i TETMON_end",tetra_hack_rxid);
+	sprintf(buf2,"DLCR:%i DLTS:%i RX:%i TETMON_end",rsd.cad.carrier_nr,rsd.cad.timeslot,tetra_hack_rxid);
 	strcat(buf,buf2);
 	sendto(tetra_hack_live_socket, (char *)&buf, strlen((char *)&buf)+1, 0, (struct sockaddr *)&tetra_hack_live_sockaddr, tetra_hack_socklen);
 
@@ -439,7 +439,7 @@ uint parse_d_setup(struct tetra_mac_state *tms, struct msgb *msg, unsigned int l
 	printf("Basicinfo:0x%2.2X  Txgrant:%i  TXperm:%i  Callprio:%i\n",basicinfo,txgrant,txperm,callprio);
 	printf("NotificationID:%i  Tempaddr:%i CPTI:%i  CallingSSI:%i  CallingExt:%i\n",notifindic,tempaddr,cpti,callingssi,callingext);
 
-	sprintf(tmpstr2,"TETMON_begin FUNC:DSETUPDEC IDX:%i SSI:%i SSI2:%i CID:%i NID:%i RX:%i TETMON_end",rsd.addr.usage_marker,rsd.addr.ssi,callingssi,callident,notifindic,tetra_hack_rxid);
+	sprintf(tmpstr2,"TETMON_begin FUNC:DSETUPDEC IDX:%i SSI:%i SSI2:%i CID:%i NID:%i DLCR:%i DLTS:%i RX:%i TETMON_end",rsd.addr.usage_marker,rsd.addr.ssi,callingssi,callident,notifindic,rsd.cad.carrier_nr,rsd.cad.timeslot,tetra_hack_rxid);
 	sendto(tetra_hack_live_socket, (char *)&tmpstr2, strlen((char *)&tmpstr2)+1, 0, (struct sockaddr *)&tetra_hack_live_sockaddr, tetra_hack_socklen);
 }
 
@@ -942,11 +942,7 @@ out:
 			sendto(tetra_hack_live_socket, (char *)&tmpstr, 128, 0, (struct sockaddr *)&tetra_hack_live_sockaddr, tetra_hack_socklen);
 			//printf("\nSQ5BPF KOMUNIKAT: [%s]\n",tmpstr);
 		}
-
-
-
 	}
-
 
 	printf("\n");
 }
